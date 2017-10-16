@@ -1,0 +1,53 @@
+html {
+    height: 100%;
+}
+
+body {
+    -webkit-app-region: drag;
+    min-height: 100%;
+    padding: 5px;
+    margin: 0px;
+    overflow: hidden;
+    background-color: rgba(66, 66, 66, 0.7)
+}
+
+* {
+    -webkit-user-select: none;
+    color: gold;
+}
+
+button { 
+    -webkit-app-region: no-drag;
+}
+
+.resource_block {
+    display: inline;
+}
+
+.si_block {
+    border-bottom: 1px solid white;
+}
+
+.resource_block .resource_label, .resource_block .resource_value {
+    display: inherit;
+}
+
+.info_title {
+    font-size: 1.6em;
+    margin: 0;
+    color: gold;
+}
+
+.resource_label, .resource_value {
+    color: white;
+}
+
+.resource_label {
+    font-size: 1.2em;
+    padding-right: 1em;
+}
+
+.resource_value {
+    font-size: 1em;
+    padding-right: 1em;
+}

@@ -1,0 +1,11 @@
+{
+  "name": "oh_my_system",
+  "main": "views/main.html",
+  "window": {
+    "min_width": 400,
+    "min_height": 400,
+    "toolbar": false,
+    "frame": false,
+    "transparent": true
+  }
+}
