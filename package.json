@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "dev": "./node_modules/.bin/electron .",
-    "watch": "watchify app/index.js -o dist/bundle.js -t babelify -v",
+    "watch": "watchify app/app.js -o dist/bundle.js -t babelify -v",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,5 +26,8 @@
     "electron": "^1.7.9",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
+  },
+  "dependencies": {
+    "systeminformation": "^3.33.10"
   }
 }
