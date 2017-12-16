@@ -13,10 +13,11 @@ class HardwareList extends Component {
     
     render() {
         let infoComponents = [];
- 
-        for (let info in this.props.infos) {
-            let aItem = this.props.infos[info]
-            infoComponents.push(<HardwareListItem info={aItem} key={aItem.name} />)
+
+        // generate info category(list)
+        for (let i in this.props.infos) {
+            let aItem = this.props.infos[i]
+            infoComponents.push(<HardwareListItem info={aItem} key={i} />)
         }
 
         return (

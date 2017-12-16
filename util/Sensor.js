@@ -1,4 +1,5 @@
 
-module.exports = function(name) {
+module.exports = function(name, value) {
     this.name = name;
+    this.value = value;
 }

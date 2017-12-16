@@ -28,6 +28,7 @@
     "react-dom": "^16.2.0"
   },
   "dependencies": {
+    "node-wmi": "0.0.5",
     "systeminformation": "^3.33.10"
   }
 }

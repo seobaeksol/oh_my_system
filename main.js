@@ -2,7 +2,7 @@ const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
 const {ipcMain} = require('electron')
-const hwi = require('./util/HardwareInfoManager')
+const HWInfoManager = require('./util/HardwareInfoManager')
 
 let win
 
@@ -19,13 +19,24 @@ function createWindow() {
     }))
 
     win.webContents.openDevTools()
+    // to clear hardware info refresh interval, save id here
+    win.intervalId = null;
 
     win.on('closed', () => {
+        if (win.intervalId) {
+            clearInterval(win.intervalId)
+        }
         win = null
     })
 
+    var hwi = new HWInfoManager();
+
     win.webContents.on('did-finish-load', () => {
-        win.webContents.send('HW_INFOS', new hwi().infos)
+        // send hardware information
+        win.intervalId = setInterval(() => {
+            hwi.update()
+            win.webContents.send('HW_INFOS', hwi.infos)
+        }, 1000);
     })
 }
 

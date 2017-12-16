@@ -14,15 +14,20 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        // regist listener getting hardware information
         ipcRenderer.on('HW_INFOS' , this.updateHWInfo.bind(this));
     }
+
+    componentWillUnmount() {
+        if (this.state.intervalId)
+            clearInterval(this.state.intervalId)
+    }
+    
 
     updateHWInfo(event, data) {
         this.setState({
             hwInfos: data
         });
-
-        console.dir(this.state);
     }
     
     render() {
