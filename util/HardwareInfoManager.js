@@ -27,42 +27,9 @@ module.exports = function () {
     this.infos.push(new hwi('DISK'))
 
     this.updateCPU = function(data) {
-        wmi.Query({
-            class: "Win32_PerfRawData_PerfOS_Processor",
-            props: ["name", "PercentProcessorTime", "Timestamp_Sys100NS"]
-        }, (function(err, data) {
-            total = 0;
-
-            var sensors = [];
-
-            // raw_cpu save previous raw cpu data
-            if (this.raw_cpu) {
-                for(var i in data) {
-                    var item = data[i]
-                    raw_cpu = this.raw_cpu[i]
-
-                    // cpu usage is calculated by gap of processortime.
-                    // item is current one and raw_cpu is previous
-                    usage = ((1 - 
-                        ((item.PercentProcessorTime - raw_cpu.PercentProcessorTime) / 
-                        (item.Timestamp_Sys100NS - raw_cpu.Timestamp_Sys100NS))) * 100
-                    );
-                    sensors.push(
-                        new Sensor('CPU#' + item.Name,
-                        (usage > 0 ? usage.toFixed(1) : "0.0") + "%")
-                    );
-                }
-                this.cpu.sensors = sensors;
-            } else {
-                for(var i in data) {
-                    sensors.push(
-                        new Sensor('CPU#' + data[i].Name, "0.0%")
-                    );
-                }
-                this.cpu.sensors = sensors;
-            }
-
-            this.raw_cpu = data
+        si.currentLoad((function(data) {
+            this.cpu.sensors = data.cpus.map((item, index) => new Sensor('CPU#' + index, item.load.toFixed(1)));
+            this.cpu.sensors.push(new Sensor('Total', data.currentload.toFixed(1)))
         }).bind(this))
     }
 
