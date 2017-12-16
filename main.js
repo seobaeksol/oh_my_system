@@ -7,6 +7,7 @@ const HWInfoManager = require('./util/HardwareInfoManager')
 let win
 
 function createWindow() {
+
     win = new BrowserWindow({
         width: 800,
         height: 600
@@ -31,13 +32,11 @@ function createWindow() {
 
     var hwi = new HWInfoManager();
 
-    win.webContents.on('did-finish-load', () => {
-        // send hardware information
-        win.intervalId = setInterval(() => {
-            hwi.update()
-            win.webContents.send('HW_INFOS', hwi.infos)
-        }, 1000);
-    })
+    // send hardware information
+    win.intervalId = setInterval(() => {
+        hwi.update()
+        win.webContents.send('HW_INFOS', hwi.infos)
+    }, 1000);
 }
 
 app.on('ready', createWindow)
