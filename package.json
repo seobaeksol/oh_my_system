@@ -1,0 +1,30 @@
+{
+  "name": "oh_my_system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "dev": "./node_modules/.bin/electron .",
+    "watch": "watchify src/js/index.js -o dist/bundle.js -t babelify -v",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geekwims/oh_my_system.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/geekwims/oh_my_system/issues"
+  },
+  "homepage": "https://github.com/geekwims/oh_my_system#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babelify": "^8.0.0",
+    "electron": "^1.7.9",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  }
+}
