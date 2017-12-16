@@ -13,6 +13,7 @@ module.exports = function () {
 
     // cpu
     this.cpu = new hwi('CPU')
+    // raw_cpu for calcurating cpu usage
     this.raw_cpu = null;
     si.cpu(this.initCPU.bind(this))
     this.infos.push(this.cpu)
@@ -34,10 +35,14 @@ module.exports = function () {
 
             var sensors = [];
 
+            // raw_cpu save previous raw cpu data
             if (this.raw_cpu) {
                 for(var i in data) {
                     var item = data[i]
                     raw_cpu = this.raw_cpu[i]
+
+                    // cpu usage is calculated by gap of processortime.
+                    // item is current one and raw_cpu is previous
                     usage = ((1 - 
                         ((item.PercentProcessorTime - raw_cpu.PercentProcessorTime) / 
                         (item.Timestamp_Sys100NS - raw_cpu.Timestamp_Sys100NS))) * 100
