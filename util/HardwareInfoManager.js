@@ -64,11 +64,11 @@ module.exports = function () {
                 if (!isHardwareType && (element.indexOf('HardwareType') != -1)) {
                     isHardwareType = true;
                 }
-
                 if (isHardwareType && (element.indexOf('Name') != -1)) {
                     this.gpu.name = element.split(':')[1].trim()
                     isHardwareType = false;
                 }
+                
                 if (!isOnSensor && (element.indexOf('SensorType') != -1)) {
                     sensor = new Sensor(element.split(':')[1].trim())
                     sensor.type = sensor.name

@@ -5,19 +5,18 @@ const SensorsUtils = require('./SensorsUtils')
 const LINE_BREAK = "\r\n";
 const shell = require('node-powershell')
 
+// generate and execute Windows PowerShell Script
 var PowerShellScriptHelper = function() {
     this.ps = null;
 
+    // generate dll import query
     this.dllImport = function() {
-        tmpPath = SensorsUtils.generateLibTmpPath("OpenHardwareMonitorLib.dll")
-
         this.ps.addCommand("[System.Reflection.Assembly]::LoadFile(\""
-        + tmpPath + "\")" + " | Out-Null"
+        + SensorsUtils.generateLibTmpPath("OpenHardwareMonitorLib.dll") + "\")" + " | Out-Null"
         + LINE_BREAK);
-
-        return tmpPath;
     }
 
+    // Create object and configure getting data
     this.newComputerInstance = function() {
         this.ps.addCommand('$PC = New-Object OpenHardwareMonitor.Hardware.Computer')
         // this.ps.addCommand('$PC.CPUEnabled = $true')
@@ -27,6 +26,7 @@ var PowerShellScriptHelper = function() {
         // this.ps.addCommand('$PC.HDDEnabled = $true')
     }
 
+    // getting data
     this.sensorsQueryLoop = function() {
         var cmd =
             "try" + LINE_BREAK + 
@@ -55,18 +55,18 @@ var PowerShellScriptHelper = function() {
         this.ps.addCommand(cmd)
     }
     
+    // combine scripts
     this.getPowerShellScript = function() {
         this.ps = new shell({debugMsg: false})
 
-        tmpPath = this.dllImport()
+        this.dllImport()
         this.newComputerInstance();
         this.sensorsQueryLoop();
-
-        return tmpPath;
     }
 
+    // generate script and execute
     this.getRawSensorsData = function(cb) {
-        tmpPath = this.getPowerShellScript();
+        this.getPowerShellScript();
 
         this.ps.invoke().then(cb).catch(err => {
             console.error(err);
