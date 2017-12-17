@@ -7,7 +7,7 @@ const shell = require('node-powershell')
 
 // generate and execute Windows PowerShell Script
 var PowerShellScriptHelper = function() {
-    this.ps = null;
+    this.ps = new shell({debugMsg: false})
 
     // generate dll import query
     this.dllImport = function() {
@@ -57,7 +57,6 @@ var PowerShellScriptHelper = function() {
     
     // combine scripts
     this.getPowerShellScript = function() {
-        this.ps = new shell({debugMsg: false})
 
         this.dllImport()
         this.newComputerInstance();
@@ -67,7 +66,6 @@ var PowerShellScriptHelper = function() {
     // generate script and execute
     this.getRawSensorsData = function(cb) {
         this.getPowerShellScript();
-
         this.ps.invoke().then(cb).catch(err => {
             console.error(err);
             this.ps.dispose();

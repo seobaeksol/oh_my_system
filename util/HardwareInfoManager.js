@@ -30,8 +30,8 @@ module.exports = function () {
 
     this.updateCPU = function(data) {
         si.currentLoad((function(data) {
-            this.cpu.sensors = data.cpus.map((item, index) => new Sensor('CPU#' + index, item.load.toFixed(1)));
-            this.cpu.sensors.push(new Sensor('Total', data.currentload.toFixed(1)))
+            this.cpu.sensors = data.cpus.map((item, index) => new Sensor('CPU#' + index, item.load.toFixed(1) + " %"));
+            this.cpu.sensors.push(new Sensor('Total', data.currentload.toFixed(1) + " %"))
         }).bind(this))
     }
 
